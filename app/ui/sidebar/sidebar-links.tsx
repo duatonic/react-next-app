@@ -31,7 +31,7 @@ export default function SidebarLinks() {
             {links.map((link) => {
                 const LinkIcon = link.icon as IconType;
                 return (
-                    <div className="flex flex-row items-center">
+                    <div key={link.name} className="flex flex-row items-center">
                         {/* Mobile Layout */}
                         {/* <Link
                             key={link.name}

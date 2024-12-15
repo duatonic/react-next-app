@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
 import "./ui/globals.css";
 import Sidebar from "./ui/sidebar/sidebar";
 import FollowBar from "./ui/sidebar/followbar";

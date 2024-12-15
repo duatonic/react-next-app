@@ -1,13 +1,13 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import { FaFeather } from 'react-icons/fa';
+// import { FaFeather } from 'react-icons/fa';
 
 import { useLoginModal } from '../../hooks/use-login-modal';
 
 export default function ChirpButton() {
-    const router = useRouter();
+    // const router = useRouter();
     const loginModal = useLoginModal();
 
     const onClick = useCallback(() => {
