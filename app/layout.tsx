@@ -1,33 +1,30 @@
 import type { Metadata } from "next";
 // import localFont from "next/font/local";
-import "./ui/globals.css";
-import Sidebar from "./ui/sidebar/sidebar";
-import FollowBar from "./ui/sidebar/followbar";
-import LoginModal from "./ui/modal/login-modal";
-import RegisterModal from "./ui/modal/register-modal";
+import "@/app/ui/globals.css";
+import Sidebar from "@/app/ui/sidebar/sidebar";
+import FollowBar from "@/app/ui/sidebar/followbar";
+import LoginModal from "@/app/ui/modal/login-modal";
+import RegisterModal from "@/app/ui/modal/register-modal";
 import { Toaster } from "react-hot-toast";
-import { getServerSession } from "next-auth/next";
-import { SessionProvider } from "next-auth/react";
+import Providers from "@/app/providers";
 
 export const metadata: Metadata = {
   title: "Chirper",
   description: "Chirper social media app",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-
   return (
     <html lang="en">
       <body className="h-screen bg-black">
-        <SessionProvider session={session}>
+        <Providers>
           <Toaster />
-          <LoginModal />
           <RegisterModal />
+          <LoginModal />
           <div className="container h-full mx-auto xl:px-30 max-w-6xl">
             <div className="grid grid-cols-4 h-full">
               <Sidebar />
@@ -37,7 +34,7 @@ export default async function RootLayout({
               <FollowBar />
             </div>
           </div>
-        </SessionProvider>
+        </Providers>
       </body>
     </html>
   );

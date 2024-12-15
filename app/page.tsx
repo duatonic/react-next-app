@@ -1,4 +1,4 @@
-import Header from './ui/header';
+import Header from '@/app/ui/header';
 
 export default function Page() {
   return (

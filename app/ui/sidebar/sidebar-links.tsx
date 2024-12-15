@@ -5,6 +5,8 @@ import { BsHouseFill, BsBellFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { IconType } from "react-icons";
 import Link from "next/link";
+// import { useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 const links = [
     {
@@ -25,12 +27,20 @@ const links = [
 ];
 
 export default function SidebarLinks() {
-    // const pathname = usePathname();
+    const router = useRouter();
+
+    // const handleClick = useCallback ((href: any) => {
+
+    //     return router.push(href);
+
+    // }, [router]);
+
     return (
         <>
             {links.map((link) => {
                 const LinkIcon = link.icon as IconType;
                 return (
+                    // <div key={link.name} onClick={() => handleClick(link.href)} className="flex flex-row items-center">
                     <div key={link.name} className="flex flex-row items-center">
                         {/* Mobile Layout */}
                         {/* <Link

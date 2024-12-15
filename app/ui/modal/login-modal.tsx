@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useLoginModal } from '../../hooks/use-login-modal';
-import { useRegisterModal } from '../../hooks/use-register-modal';
-import Input from '../input';
-import Modal from './modal';
+import { useLoginModal } from '@/app/hooks/use-login-modal';
+import { useRegisterModal } from '@/app/hooks/use-register-modal';
+import Input from '@/app/ui/input';
+import Modal from '@/app/ui/modal/modal';
 
 export default function LoginModal() {
     const loginModal = useLoginModal();

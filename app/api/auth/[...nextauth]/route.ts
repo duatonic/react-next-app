@@ -1,9 +1,8 @@
-import bcrypt from 'bcrypt';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-
-import prisma from '../../lib/prismadb';
+import prisma from '@/app/lib/prismadb';
+import bcrypt from 'bcrypt';
 
 export default NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -25,7 +24,7 @@ export default NextAuth({
                     }
                 });
 
-                if (!user || !user.hashedPassword) {
+                if (!user || !user?.hashedPassword) {
                     throw new Error('No user found');
                 }
 

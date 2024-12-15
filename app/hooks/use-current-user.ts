@@ -1,5 +1,7 @@
+'use client';
+
 import useSWR from 'swr';
-import fetcher from '../lib/fetcher';
+import fetcher from '@/app/lib/fetcher';
 
 const useCurrentUser = () => {
     const { data, error, isLoading, mutate } = useSWR('/api/current-user', fetcher);

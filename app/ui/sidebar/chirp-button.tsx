@@ -4,7 +4,7 @@
 import { useCallback } from 'react';
 // import { FaFeather } from 'react-icons/fa';
 
-import { useLoginModal } from '../../hooks/use-login-modal';
+import { useLoginModal } from '@/app/hooks/use-login-modal';
 
 export default function ChirpButton() {
     // const router = useRouter();

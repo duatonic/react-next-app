@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-import Button from "../button";
+import Button from "@/app/ui/button";
 
 interface ModalProps {
     actionLabel: string;
