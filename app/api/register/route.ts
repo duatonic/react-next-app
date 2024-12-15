@@ -18,10 +18,10 @@ export async function POST(request: Request) {
             }
         });
 
-        return NextResponse.json({ user }, { status: 200 });
+        // return NextResponse.json({ user }, { status: 200 });
     }
     catch (error) {
-        console.log(error);
+        console.log("<register>", error);
         return NextResponse.json({ message: 'An error occurred' }, { status: 500 });
     }
 }

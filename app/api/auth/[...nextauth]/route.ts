@@ -1,10 +1,10 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import NextAuth from 'next-auth';
+import NextAuth, { SessionStrategy, AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '@/app/lib/prismadb';
 import bcrypt from 'bcrypt';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
-export default NextAuth({
+export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
@@ -25,7 +25,7 @@ export default NextAuth({
                 });
 
                 if (!user || !user?.hashedPassword) {
-                    throw new Error('No user found');
+                    throw new Error('Invalid credentials');
                 }
 
                 const isValid = await bcrypt.compare(credentials.password, user.hashedPassword);
@@ -41,10 +41,16 @@ export default NextAuth({
     ],
     debug: process.env.NODE_ENV === 'development',
     session: {
-        strategy: 'jwt',
+        strategy: 'jwt' as SessionStrategy,
     },
     jwt: {
         secret: process.env.NEXTAUTH_JWT_SECRET,
     },
     secret: process.env.NEXTAUTH_SECRET,
-});
+    pages: {
+        error: '/auth/error'
+    }
+};
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
