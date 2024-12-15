@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./ui/globals.css";
 import Sidebar from "./ui/sidebar/sidebar";
 import FollowBar from "./ui/sidebar/followbar";
+// import Modal from "./ui/modal/modal";
 
 export const metadata: Metadata = {
   title: "Chirper",
@@ -16,6 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      {/* <Modal actionLabel="Submit" isOpen title="test modal" /> */}
       <body className="h-screen bg-black">
         <div className="container h-full mx-auto xl:px-30 max-w-6xl">
           <div className="grid grid-cols-4 h-full">
