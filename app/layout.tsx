@@ -5,33 +5,39 @@ import Sidebar from "./ui/sidebar/sidebar";
 import FollowBar from "./ui/sidebar/followbar";
 import LoginModal from "./ui/modal/login-modal";
 import RegisterModal from "./ui/modal/register-modal";
-// import Modal from "./ui/modal/modal";
+import { Toaster } from "react-hot-toast";
+import { getServerSession } from "next-auth/next";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Chirper",
   description: "Chirper social media app",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
+
   return (
     <html lang="en">
       <body className="h-screen bg-black">
-        {/* <Modal actionLabel="Submit" isOpen title="test modal" /> */}
-        <LoginModal />
-        <RegisterModal />
-        <div className="container h-full mx-auto xl:px-30 max-w-6xl">
-          <div className="grid grid-cols-4 h-full">
-            <Sidebar />
-            <div className="col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800">
-              {children}
+        <SessionProvider session={session}>
+          <Toaster />
+          <LoginModal />
+          <RegisterModal />
+          <div className="container h-full mx-auto xl:px-30 max-w-6xl">
+            <div className="grid grid-cols-4 h-full">
+              <Sidebar />
+              <div className="col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800">
+                {children}
+              </div>
+              <FollowBar />
             </div>
-            <FollowBar />
           </div>
-        </div>
+        </SessionProvider>
       </body>
     </html>
   );
