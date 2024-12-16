@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import useUsers from '@/app/hooks/useUsers';
 
-import Avatar from '@/app/ui/Avatar';
+import Avatar from '@/app/ui/avatar';
 
 interface UserHeroProps {
     userId: string;
@@ -31,6 +31,3 @@ const UserHero: React.FC<UserHeroProps> = ({ userId }) => {
 };
 
 export default UserHero;
-
-
-return UserHero;

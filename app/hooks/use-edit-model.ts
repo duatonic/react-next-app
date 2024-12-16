@@ -1,15 +1,15 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
-interface RegisterModalStore {
+interface EditModelStore {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
 };
 
-export const useRegisterModal = create<RegisterModalStore>((set) => ({
+const useEditModel = create<EditModelStore>((set) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false }),
-}))
+}));
 
-export default useRegisterModal;
+export default useEditModel;
