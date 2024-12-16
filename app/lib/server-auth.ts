@@ -1,11 +1,11 @@
-import { getSession } from "next-auth/react";
-// import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/app/lib/prismadb";
 
-export default async function serverAuth(request: Request) {
-    const session = await getSession(authOptions);
-    console.log('session:', session);
+export async function serverAuth() {
+    const session = await getServerSession(authOptions);
+    console.log('<server-auth> da session:', session);
+
 
     if (!session?.user?.email) {
         throw new Error('Not signed in');
