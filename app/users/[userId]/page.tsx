@@ -1,16 +1,17 @@
+'use client';
+
 import Header from '@/app/ui/header';
-import { usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { ClipLoader } from 'react-spinners';
-import useUsers from '@/app/hooks/use-users';
+import useUsers from '@/app/hooks/useUsers';
 import UserHero from '@/app/ui/users/UserHero';
 import UserBio from '@/app/ui/users/UserBio';
+import PostFeed from '@/app/ui/posts/postFeed';
 
-export function UserView() {
-    // const router = useRouter();
-    // const { userId } = router.query;
-    const pathname = usePathname();
-    const userId = pathname.split('/').pop();
+const UserView = () => {
+    const { userId } = useParams();
 
+    console.log('<userview> da userId:', userId);
 
     const { data: fetchedUser, isLoading } = useUsers(userId as string);
 
@@ -27,6 +28,9 @@ export function UserView() {
             <Header showBackArrow name={fetchedUser?.name} />
             <UserHero userId={userId as string} />
             <UserBio userId={userId as string} />
+            <PostFeed userId={userId as string}/>
         </>
     );
 }
+
+export default UserView;

@@ -1,9 +1,10 @@
 import { format } from "date-fns";
 import useCurrentUser from "@/app/hooks/use-current-user";
-import useUsers from "@/app/hooks/use-users";
+import useUsers from "@/app/hooks/useUsers";
 import { useMemo } from "react";
 import Button from "@/app/ui/button";
 import { BiCalendar } from "react-icons/bi";
+import useEditModel from "@/app/hooks/use-edit-model";
 import useFollow from "@/app/hooks/use-follow";
 
 interface UserBioProps {
@@ -13,6 +14,8 @@ interface UserBioProps {
 const UserBio: React.FC<UserBioProps> = ({ userId }) => {
     const { data: currentUser} = useCurrentUser();
     const { data: fetchedUser } = useUsers(userId);
+
+    const editModel = useEditModel();
 
     const { isFollowing, toggleFollow } = useFollow(userId);
 
@@ -28,7 +31,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
         <div className="border-b-[1px] border-neutral-800 pb-4">
             <div className="flex justify-end p-2">
                 {currentUser?.id === userId ? (
-                    <Button secondary label="Edit" onClick={() => {}} />
+                    <Button secondary label="Edit" onClick={editModel.onOpen} />
                 ) : (
                     <Button
                         onClick={toggleFollow}

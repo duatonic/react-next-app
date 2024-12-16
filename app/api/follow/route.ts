@@ -1,21 +1,16 @@
+// app/api/follow/route.ts
 import { NextResponse } from "next/server";
 import { serverAuth } from "@/app/lib/server-auth";
 import prisma from "@/app/lib/prismadb";
 
-export default async function handler(request: Request) {
-    const { method } = request;
-
-    if (method !== 'POST' && method !== 'DELETE') {
-        return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
-    }
-
+export async function POST(request: Request) {
     try {
-        const userId = request.body;
+        const { userId } = await request.json(); // Changed from request.body to request.json()
 
         const { currentUser } = await serverAuth();
 
         if (!userId || typeof userId !== 'string') {
-            throw new Error('No user found');
+            return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
         }
 
         const user = await prisma.user.findUnique({
@@ -25,18 +20,11 @@ export default async function handler(request: Request) {
         });
 
         if (!user) {
-            throw new Error('No user found');
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
 
-        let updatedFollowingIds = [...(user.followingIds || [])];
-
-        if (method === 'POST') {
-            updatedFollowingIds.push(userId);
-        }
-
-        if (method === 'DELETE') {
-            updatedFollowingIds = updatedFollowingIds.filter((followingId) => followingId !== userId);
-        }
+        const updatedFollowingIds = [...(currentUser.followingIds || [])];
+        updatedFollowingIds.push(userId);
 
         const updatedUser = await prisma.user.update({
             where: {
@@ -51,6 +39,46 @@ export default async function handler(request: Request) {
     }
     catch (error) {
         console.log(error);
-        return NextResponse.json({ error: 'Error fetching users' }, { status: 500 });
+        return NextResponse.json({ error: 'Error following user' }, { status: 500 });
+    }
+}
+
+export async function DELETE(request: Request) {
+    try {
+        const { userId } = await request.json(); // Changed from request.body to request.json()
+
+        const { currentUser } = await serverAuth();
+
+        if (!userId || typeof userId !== 'string') {
+            return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
+        }
+
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        });
+
+        if (!user) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        }
+
+        const updatedFollowingIds = [...(currentUser.followingIds || [])];
+        const updatedIds = updatedFollowingIds.filter((followingId) => followingId !== userId);
+
+        const updatedUser = await prisma.user.update({
+            where: {
+                id: currentUser.id
+            },
+            data: {
+                followingIds: updatedIds
+            }
+        });
+
+        return NextResponse.json(updatedUser);
+    }
+    catch (error) {
+        console.log(error);
+        return NextResponse.json({ error: 'Error unfollowing user' }, { status: 500 });
     }
 }

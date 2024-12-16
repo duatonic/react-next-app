@@ -2,20 +2,14 @@ import { NextResponse } from "next/server";
 import { serverAuth } from "@/app/lib/server-auth";
 import prisma from "@/app/lib/prismadb";
 
-export default async function handler(request: Request) {
-    const { method } = request;
-
-    if (method !== 'POST' && method !== 'DELETE') {
-        return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
-    }
-
+export async function POST(request: Request) {
     try {
-        console.log('<like> da request.body:', request.body);
-        const postId = request.body;
+        const data = await request.json();
+        const { postId } = data;
         const { currentUser } = await serverAuth();
 
         if (!postId || typeof postId !== 'string') {
-            throw new Error('No post found');
+            return NextResponse.json({ error: 'Invalid post ID' }, { status: 400 });
         }
 
         const post = await prisma.post.findUnique({
@@ -25,18 +19,10 @@ export default async function handler(request: Request) {
         });
 
         if (!post) {
-            throw new Error('Invalid ID');
+            return NextResponse.json({ error: 'Post not found' }, { status: 404 });
         }
 
-        let updatedLikedIds = [...(post.likedIds || [])];
-
-        if (method === 'POST') {
-            updatedLikedIds.push(currentUser.id);
-        }
-
-        if (method === 'DELETE') {
-            updatedLikedIds = updatedLikedIds.filter((likedId) => likedId !== currentUser.id);
-        }
+        const updatedLikedIds = [...(post.likedIds || []), currentUser.id];
 
         const updatedPost = await prisma.post.update({
             where: {
@@ -51,6 +37,45 @@ export default async function handler(request: Request) {
     }
     catch (error) {
         console.log(error);
-        return NextResponse.json({ error: 'Error fetching users' }, { status: 500 });
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    }
+}
+
+export async function DELETE(request: Request) {
+    try {
+        const data = await request.json();
+        const { postId } = data;
+        const { currentUser } = await serverAuth();
+
+        if (!postId || typeof postId !== 'string') {
+            return NextResponse.json({ error: 'Invalid post ID' }, { status: 400 });
+        }
+
+        const post = await prisma.post.findUnique({
+            where: {
+                id: postId
+            }
+        });
+
+        if (!post) {
+            return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+        }
+
+        const updatedLikedIds = post.likedIds?.filter((likedId) => likedId !== currentUser.id) || [];
+
+        const updatedPost = await prisma.post.update({
+            where: {
+                id: postId
+            },
+            data: {
+                likedIds: updatedLikedIds
+            }
+        });
+
+        return NextResponse.json(updatedPost);
+    }
+    catch (error) {
+        console.log(error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

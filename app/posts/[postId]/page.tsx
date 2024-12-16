@@ -1,8 +1,11 @@
+'use client';
+
 import { usePathname } from 'next/navigation';
 import usePost from '@/app/hooks/use-post';
 import { ClipLoader } from 'react-spinners';
 import Header from '@/app/ui/header';
-import PostItem from '@/app/ui/posts/PostItem';
+import PostItem from '@/app/ui/posts/postItem';
+import Form from '@/app/ui/form';
 
 export default function PostView() {
     const pathname = usePathname();

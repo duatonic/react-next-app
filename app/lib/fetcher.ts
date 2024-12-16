@@ -18,8 +18,8 @@ const axiosInstance = axios.create({
 //     }
 // }
 
-export const fetcher = (url: string) => {
+const fetcher = (url: string) => {
     return axios.get(url).then((res) => res.data);
 }
 
-// export default fetcher;
+export default fetcher;

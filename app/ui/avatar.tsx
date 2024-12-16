@@ -47,7 +47,7 @@ const Avatar: React.FC<avatarProps> = ({
                     objectFit: 'cover',
                     borderRadius: '100%'
                 }}
-                alt="avatar"
+                alt="avataA"
                 onClick={onClick}
                 src={fetchedUser?.profileImage || '/image/pexels-connor-danylenko-2538122.jpg'}
     />

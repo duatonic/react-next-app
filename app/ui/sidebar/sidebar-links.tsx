@@ -26,9 +26,8 @@ const links = [
     // },
     {
         name: "Profile",
-        href: "/profile",
-        icon: FaUser,
-        auth: true,
+        href: '/users/${currentUser?.id}',
+        icon: FaUser
     }
 ];
 

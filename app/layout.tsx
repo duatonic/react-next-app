@@ -7,6 +7,7 @@ import LoginModal from "@/app/ui/modal/login-modal";
 import RegisterModal from "@/app/ui/modal/register-modal";
 import { Toaster } from "react-hot-toast";
 import Providers from "@/app/providers";
+import EditModal from "./ui/modal/edit-modal";
 
 export const metadata: Metadata = {
   title: "Chirper",
@@ -33,6 +34,7 @@ export default function RootLayout({
               </div>
               <FollowBar />
             </div>
+            <EditModal />
           </div>
         </Providers>
       </body>

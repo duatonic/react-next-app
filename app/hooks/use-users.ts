@@ -1,7 +1,7 @@
 'use client';
 
 import useSWR from 'swr';
-import { fetcher } from '@/app/lib/fetcher';
+import fetcher from '@/app/lib/fetcher';
 
 const useUsers = (userId?: string) => {
     const url = userId ? `/api/users/${userId}` : '/api/users';
