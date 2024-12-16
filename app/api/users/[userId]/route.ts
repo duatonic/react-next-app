@@ -1,13 +1,15 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/app/lib/prismadb'
 
-export default async function GET(request: Request, { params }: any) {
+export async function GET(
+    request: Request,
+    { params }: { params: { userId: string } }
+) {
     try {
-       console.log("<[userid]> da request, params:", request, params);
-       const { userId } = params.id;
+        const userId = params.userId;
 
-       if (!userId || typeof userId !== 'string'){
-        throw new Error('Invalid user ID');
+        if (!userId || typeof userId !== 'string') {
+            return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
         }
 
         const existingUser = await prisma.user.findUnique({
@@ -16,19 +18,22 @@ export default async function GET(request: Request, { params }: any) {
             }
         });
 
+        if (!existingUser) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        }
+
         const followersCount = await prisma.user.count({
             where: {
                 followingIds: {
                     has: userId
-             }
+                }
             }
         });
 
         return NextResponse.json({ ...existingUser, followersCount });
-        
     }
-    catch (error){
-        console.log('Error');
-        return NextResponse.json({ error: 'Error fetching user' }, { status: 400 });
+    catch (error) {
+        console.log('Error:', error);
+        return NextResponse.json({ error: 'Error fetching user' }, { status: 500 });
     }
 }
