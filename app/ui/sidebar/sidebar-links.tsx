@@ -21,7 +21,7 @@ const links = [
     },
     {
         name: "Profile",
-        href: "/profile",
+        href: "/users/${currentUser?.id}",
         icon: FaUser
     }
 ];

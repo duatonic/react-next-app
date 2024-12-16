@@ -4,7 +4,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/app/lib/prismadb";
 
 export default async function serverAuth(request: Request) {
-    const session = await getSession(request);
+    const session = await getSession(authOptions);
     console.log('session:', session);
 
     if (!session?.user?.email) {
