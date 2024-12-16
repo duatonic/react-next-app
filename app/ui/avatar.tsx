@@ -1,7 +1,7 @@
 'use client';
 import { useCallback } from "react";
 
-import useUsers from "../hooks/useUsers";
+import useUsers from "../hooks/use-users";
 import { useRouter } from "next/navigation";
 import Image from 'next/image';
 
@@ -11,7 +11,7 @@ interface avatarProps {
     hasBorder?: boolean;
 }
 
-const avatar: React.FC<avatarProps> = ({
+const Avatar: React.FC<avatarProps> = ({
      userId,
       isLarge,
        hasBorder
@@ -55,4 +55,4 @@ const avatar: React.FC<avatarProps> = ({
     );
 };
 
-export default avatar;
+export default Avatar;

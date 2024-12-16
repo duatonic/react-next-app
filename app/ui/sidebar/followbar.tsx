@@ -1,10 +1,11 @@
-"use client";
-import useUsers from "@/app/hooks/useUsers";
+'use client';
+
+import useUsers from "@/app/hooks/use-users";
 import Avatar from "@/app/ui/avatar";
 
-const FollowBar = () => {
+export default function FollowBar() {
     const { data: users = [] } = useUsers();
-    console.log(users);
+    console.log("<followbar> da users:", users);
 
     if (users.length === 0) {
         return null;
@@ -18,20 +19,18 @@ const FollowBar = () => {
                     {users.map((user: Record<string, any>) => (
                         <div key={user.id} className="flex items-center gap-4">
                             <Avatar userId={user.id} />
-                        <div className="flex flex-col">
-                            <p className="text-white font-semibold text-sm">
-                                {user.name}
-                            </p>
-                            <p className="text-neutral-400 text-sm">
-                                @{user.username}
-                            </p>
+                            <div className="flex flex-col">
+                                <p className="text-white font-semibold text-sm">
+                                    {user.name}
+                                </p>
+                                <p className="text-neutral-400 text-sm">
+                                    @{user.username}
+                                </p>
+                            </div>
                         </div>
-                    </div>
                     ))}
                 </div>
             </div>
         </div>
     );
-}
-
-export default FollowBar;
+};

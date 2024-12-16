@@ -7,41 +7,59 @@ import { IconType } from "react-icons";
 import Link from "next/link";
 // import { useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useLoginModal } from "@/app/hooks/use-login-modal";
+import { useCallback } from "react";
+import { useSession } from "next-auth/react";
 
 const links = [
     {
         name: "Home",
         href: "/",
-        icon: BsHouseFill
+        icon: BsHouseFill,
+        auth: false,
     },
-    {
-        name: "Notifications",
-        href: "/notifications",
-        icon: BsBellFill
-    },
+    // {
+    //     name: "Notifications",
+    //     href: "/notifications",
+    //     icon: BsBellFill,
+    //     auth: true,
+    // },
     {
         name: "Profile",
         href: "/profile",
-        icon: FaUser
+        icon: FaUser,
+        auth: true,
     }
 ];
 
 export default function SidebarLinks() {
-    const router = useRouter();
-
+    
     // const handleClick = useCallback ((href: any) => {
-
+        
     //     return router.push(href);
-
+    
     // }, [router]);
+    
+    const router = useRouter();
+    const loginModal = useLoginModal();
+    const { data: session } = useSession();
+
+    const handleClick = useCallback((link: any) => {
+        if (!session) {
+            loginModal.onOpen();
+        }
+        else {
+            router.push(link.href);
+        }
+    }, [loginModal, session, router]);
 
     return (
         <>
             {links.map((link) => {
                 const LinkIcon = link.icon as IconType;
                 return (
-                    // <div key={link.name} onClick={() => handleClick(link.href)} className="flex flex-row items-center">
-                    <div key={link.name} className="flex flex-row items-center">
+                    <div key={link.name} onClick={() => handleClick(link)} className="flex flex-row items-center">
+                    {/* <div key={link.name} className="flex flex-row items-center"> */}
                         {/* Mobile Layout */}
                         {/* <Link
                             key={link.name}

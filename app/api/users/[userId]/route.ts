@@ -1,16 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextResponse } from 'next/server'
 import prisma from '@/app/lib/prismadb'
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-){
-    if (req.method !== 'GET'){
-        return res.status(405).end();
-    }
-
+export default async function GET(request: Request, { params }: any) {
     try {
-       const { userId } = req.query;
+       console.log("<[userid]> da request, params:", request, params);
+       const { userId } = params.id;
 
        if (!userId || typeof userId !== 'string'){
         throw new Error('Invalid user ID');
@@ -30,11 +24,11 @@ export default async function handler(
             }
         });
 
-        return res.status(200).json({ ...existingUser, followersCount });
+        return NextResponse.json({ ...existingUser, followersCount });
         
     }
     catch (error){
         console.log('Error');
-        return res.status(400).end();
+        return NextResponse.json({ error: 'Error fetching user' }, { status: 400 });
     }
 }

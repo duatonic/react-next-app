@@ -1,14 +1,13 @@
 import { NextResponse } from 'next/server';
 import { serverAuth } from '@/app/lib/server-auth';
-import { NextApiResponse } from 'next';
 
 export async function GET() {
   try {
     const { currentUser } = await serverAuth();
 
-    console.log('<current> da currentUser:', currentUser);
+    console.log('<current> da currentUser:', NextResponse.json(currentUser));
 
-    return NextResponse.json({ currentUser }, { status: 200 });
+    return NextResponse.json(currentUser);
   }
   catch (error) {
     console.error(error);

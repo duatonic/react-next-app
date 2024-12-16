@@ -18,7 +18,7 @@ export async function POST(request: Request) {
             }
         });
 
-        // return NextResponse.json({ user }, { status: 200 });
+        return NextResponse.json({ user }, { status: 200 });
     }
     catch (error) {
         console.log("<register>", error);
