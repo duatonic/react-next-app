@@ -1,3 +1,4 @@
+'use client';
 import useCurrentUser from '@/app/hooks/use-current-user';
 import useUser from '@/app/hooks/useUsers';
 import useEditModel from '@/app/hooks/use-edit-model';

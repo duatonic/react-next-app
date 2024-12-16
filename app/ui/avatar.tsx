@@ -5,13 +5,13 @@ import useUsers from "../hooks/useUsers";
 import { useRouter } from "next/navigation";
 import Image from 'next/image';
 
-interface avatarProps {
+interface AvatarProps {
     userId: string;
     isLarge?: boolean;
     hasBorder?: boolean;
 }
 
-const avatar: React.FC<avatarProps> = ({
+const Avatar: React.FC<AvatarProps> = ({
      userId,
       isLarge,
        hasBorder
@@ -47,7 +47,7 @@ const avatar: React.FC<avatarProps> = ({
                     objectFit: 'cover',
                     borderRadius: '100%'
                 }}
-                alt="avatar"
+                alt="avataA"
                 onClick={onClick}
                 src={fetchedUser?.profileImage || '/image/pexels-connor-danylenko-2538122.jpg'}
     />
@@ -55,4 +55,4 @@ const avatar: React.FC<avatarProps> = ({
     );
 };
 
-export default avatar;
+export default Avatar;

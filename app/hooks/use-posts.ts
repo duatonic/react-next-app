@@ -1,3 +1,4 @@
+"use client";
 import fetcher from '@/app/lib/fetcher';
 import useSWR from 'swr';
 

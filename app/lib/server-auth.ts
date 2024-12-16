@@ -6,7 +6,6 @@ export async function serverAuth() {
     const session = await getServerSession(authOptions);
     console.log('<server-auth> da session:', session);
 
-
     if (!session?.user?.email) {
         throw new Error('Not signed in');
     }
