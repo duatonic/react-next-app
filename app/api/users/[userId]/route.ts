@@ -6,7 +6,9 @@ export async function GET(
     { params }: { params: { userId: string } }
 ) {
     try {
-        const userId = params.userId;
+        const { userId } = await params;
+        // console.log ('<user> da params:', params);
+        console.log('<user> da userId:', userId);
 
         if (!userId || typeof userId !== 'string') {
             return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });

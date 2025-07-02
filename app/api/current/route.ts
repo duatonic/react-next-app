@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const { currentUser } = await serverAuth();
 
-    console.log('<current> da currentUser:', NextResponse.json(currentUser));
+    // console.log('<current> da currentUser:', NextResponse.json(currentUser));
 
     return NextResponse.json(currentUser);
   }

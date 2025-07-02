@@ -11,7 +11,7 @@ const usePost = (postId: string) => {
         dedupingInterval: 5000
     });
 
-    console.log('<use-post> da data:', data);
+    // console.log('<use-post> da data:', data);
     
     return {
         data,

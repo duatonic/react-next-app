@@ -9,7 +9,7 @@ const useUsers = (userId?: string) => {
 
     // console.log('<use-users> da userId:', userId);
     // console.log('<use-users> da url:', url);
-    console.log('<use-users> da data:', data);
+    // console.log('<use-users> da data:', data);
 
     return {
         data,

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useLoginModal } from "@/app/hooks/use-login-modal";
 import { useCallback } from "react";
 import { useSession } from "next-auth/react";
+import useCurrentUser from "@/app/hooks/use-current-user";
 
 const links = [
     {
@@ -18,15 +19,15 @@ const links = [
         icon: BsHouseFill,
         auth: false,
     },
-    // {
-    //     name: "Notifications",
-    //     href: "/notifications",
-    //     icon: BsBellFill,
-    //     auth: true,
-    // },
+    {
+        name: "Notifications",
+        href: "/notifications",
+        icon: BsBellFill,
+        auth: true,
+    },
     {
         name: "Profile",
-        href: '/',
+        href: '/users',
         icon: FaUser
     }
 ];
@@ -43,9 +44,17 @@ export default function SidebarLinks() {
     const loginModal = useLoginModal();
     const { data: session } = useSession();
 
+    const { data: currentUser } = useCurrentUser();
+
+    // console.log('<sidebarlinks> currentUser:', currentUser);
+
     const handleClick = useCallback((link: any) => {
         if (!session) {
             loginModal.onOpen();
+        }
+
+        if (link.name === 'Profile') {
+            router.push(`users/${currentUser.id}`);
         }
         else {
             router.push(link.href);
@@ -59,15 +68,6 @@ export default function SidebarLinks() {
                 return (
                     <div key={link.name} onClick={() => handleClick(link)} className="flex flex-row items-center">
                     {/* <div key={link.name} className="flex flex-row items-center"> */}
-                        {/* Mobile Layout */}
-                        {/* <Link
-                            key={link.name}
-                            href={link.href}
-                            className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer lg:hidden"    
-                        >
-                            <LinkIcon size={28} color="white" />
-                            <p className="hidden md:block">{link.name}</p>
-                        </Link> */}
                         {/* Desktop Layout */}
                         <Link
                             key={link.name}

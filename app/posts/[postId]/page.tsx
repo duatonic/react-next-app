@@ -6,6 +6,7 @@ import { ClipLoader } from 'react-spinners';
 import Header from '@/app/ui/header';
 import PostItem from '@/app/ui/posts/postItem';
 import Form from '@/app/ui/form';
+import CommentFeed from '@/app/ui/posts/comment-feed';
 
 export default function PostView() {
     const pathname = usePathname();
@@ -26,6 +27,7 @@ export default function PostView() {
             <Header name="Chirp" showBackArrow />
             <PostItem data={fetchedPost} />
             <Form postId={postId as string} isComment placeholder="Chirp your reply" />
+            <CommentFeed comments={fetchedPost?.comments}/>
         </>
     );
 };
